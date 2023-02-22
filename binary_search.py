@@ -7,6 +7,15 @@ Pay very close attention to your list indexes and your < vs <= operators.
 '''
 
 def find_smallest_positive(xs):
+    lo, hi = 0, len(xs) - 1
+    while lo <= hi:
+        lo_hi_mean = (lo + hi) // 2
+        if xs[lo_hi_mean] <= 0:
+            lo = lo_hi_mean + 1
+        elif lo_hi_mean == 0 or xs[lo_hi_mean - 1] <= 0:
+            return lo_hi_mean
+        else:
+            hi = lo_hi_mean - 1
     '''
     Assume that xs is a list of numbers sorted from LOWEST to HIGHEST.
     Find the index of the smallest positive number.
@@ -29,6 +38,30 @@ def find_smallest_positive(xs):
 
 
 def count_repeats(xs, x):
+    def binary_search_1(xs, x, lo, hi):
+        while lo < hi:
+            lo_hi_mean = (lo + hi) // 2
+            if (xs[lo] == xs[hi]) and (xs[lo] == x):
+                return lo
+            if xs[lo_hi_mean] > x:
+                lo = lo_hi_mean + 1
+            else:
+                hi = lo_hi_mean
+        return lo
+
+    def binary_search_2(xs, x, lo, hi):
+        while lo <= hi:
+            lo_hi_mean = (lo + hi) // 2
+            if xs[lo_hi_mean] < x:
+                hi = lo_hi_mean
+            else:
+                lo = lo_hi_mean + 1
+        return lo
+    left = binary_search_1(xs, x, 0, len(xs) - 1)
+    if left == len(xs) - 1:
+        return 0
+    right = binary_search_2(xs, x, left, len(xs) - 1)
+    return right - left
     '''
     Assume that xs is a list of numbers sorted from HIGHEST to LOWEST,
     and that x is a number.
@@ -55,6 +88,14 @@ def count_repeats(xs, x):
 
 
 def argmin(f, lo, hi, epsilon=1e-3):
+    if hi-lo < epsilon: 
+        return (hi + lo) / 2
+    m1 = lo + (hi-lo) / 3 
+    m2 = hi - (hi-lo) / 3
+    if f(m1) < f(m2):
+        return argmin(f, lo, m2, epsilon) 
+    else:
+        return argmin(f, m1, hi, epsilon)
     '''
     Assumes that f is an input function that takes a float as input and returns a float with a unique global minimum,
     and that lo and hi are both floats satisfying lo < hi.
@@ -101,10 +142,10 @@ def find_boundaries(f):
 
     HINT:
     Begin with initial values lo=-1, hi=1.
-    Let mid = (lo+hi)/2
-    if f(lo) > f(mid):
+    Let lo_hi_mean = (lo+hi)/2
+    if f(lo) > f(lo_hi_mean):
         recurse with lo*=2
-    elif f(hi) < f(mid):
+    elif f(hi) < f(lo_hi_mean):
         recurse with hi*=2
     else:
         you're done; return lo,hi
