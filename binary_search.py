@@ -27,13 +27,11 @@ def find_smallest_positive(xs):
 
     if len(xs) == 0:
         return None
-
     if len(xs) == 1:
         if xs[0] > 0:
             return 0
         else:
             return None
-
     if len(xs) == 2:
         if xs[0] > 0:
             return 0
@@ -41,10 +39,8 @@ def find_smallest_positive(xs):
             return 1
         else:
             return None
-
     if xs[-1] <= 0:
         return None
-
     if xs[0] > 0:
         return 0
 
