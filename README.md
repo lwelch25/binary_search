@@ -2,7 +2,7 @@
 [![](https://github.com/lwelch25/binary_search/workflows/tests/badge.svg)](https://github.com/lwelch25/binary_search/actions?query=workflow%3Atests)
 [![](https://github.com/lwelch25/binary_search/workflows/extra_credit/badge.svg)](https://github.com/lwelch25/binary_search/actions?query=workflow%3Atests)
 
-You will implement several variations of the binary search algorithm.
+YYou will implement several variations of the binary search algorithm.
 
 **Learning Objectives:**
 
